@@ -4,12 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon --watch '*.ts' --exec 'ts-node' src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack-dev-server --mode development"
   },
   "keywords": [],
   "author": "",
+  "type": "commonjs",
   "license": "ISC",
   "dependencies": {
-    "rxjs": "7.8.1"
+    "rxjs": "7.8.1",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.3",
+    "webpack": "^5.89.0",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "devDependencies": {
+    "@types/es6-promise": "^3.3.0",
+    "webpack-cli": "^5.1.4"
   }
 }
