@@ -8,9 +8,19 @@
     <div>
       <ul id="list"></ul>
     </div>
-    <script src="/bundle.js"></script>
+    <link href="style.css" rel="stylesheet" />
+    <script src="https://use.fontsawesome.com/releases/v5.0.8/js/all.js"></script>
   </head>
   <body>
     tests
+    <div class="autocomplete">
+      <input id="search" type="input" placeholder="...id" />
+      <ul id="suggestLayer"></ul>
+      <div id="loading">
+        <i class="fas fa-spinner fa-pulse"></i>
+      </div>
+      <span id="loading_text"></span>
+    </div>
+    <script src="/bundle.js"></script>
   </body>
 </html>
