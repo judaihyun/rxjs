@@ -7,18 +7,28 @@ import {
   tap,
   switchMap,
   catchError,
+  finalize,
+  Subject,
+  partition,
+  merge,
+  share,
+  shareReplay,
 } from "rxjs";
 import Axios from "axios";
 const axios = Axios;
 
 const dom = document.getElementById("search");
 const layer = document.getElementById("suggestLayer");
+const subject = new Subject();
 if (!dom) throw new Error("dom is not defined");
 if (!layer) throw new Error("layer is not defined");
+
 const keyup$ = fromEvent(dom, "keyup").pipe(
   debounceTime(300),
   map((e) => (e.target as HTMLInputElement)?.value!),
-  distinctUntilChanged()
+  distinctUntilChanged(),
+  tap((v) => console.log("from keyup$ : ", v)),
+  share()
 );
 
 const user$ = keyup$.pipe(
@@ -33,13 +43,16 @@ const user$ = keyup$.pipe(
 
     return orgObservable;
   }),
-  map((e) => e.data)
+  map((e) => e.data),
+  finalize(hideLoading),
+  tap((v) => console.log("from user$ : ", v))
 );
 
-keyup$
+const reset$ = keyup$
   .pipe(
     filter((query) => query.trim().length === 0),
-    tap((v) => (layer.innerHTML = ""))
+    tap(() => (layer.innerHTML = "")),
+    tap((v) => console.log("from reset$ : ", v))
   )
   .subscribe();
 
@@ -62,4 +75,4 @@ function hideLoading() {
   loadingText.innerHTML = "";
 }
 
-export { user$ };
+export { user$, keyup$, subject };

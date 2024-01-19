@@ -2,7 +2,7 @@ import { user$ } from "./instant_search";
 
 (function () {
   user$.subscribe({
-    next: (v) => drawLayer(v.items),
+    next: (v: any) => drawLayer(v.items),
     error: (e) => {
       console.error(e);
       alert(e.message);
@@ -12,6 +12,7 @@ import { user$ } from "./instant_search";
   function drawLayer(
     items: Array<{ avatar_url: string; login: string; html_url: string }>
   ) {
+    console.log(items);
     const layer = document.getElementById("suggestLayer");
     if (!layer) return;
     layer.innerHTML = items
